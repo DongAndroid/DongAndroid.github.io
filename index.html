@@ -65,6 +65,99 @@
       <div class="outer">
         <section id="main">
   
+    <article id="aidl简单知识及注意事项-by酱油哥" class="article article-type-aidl简单知识及注意事项" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/22/by酱油哥/" class="article-date">
+  <time datetime="2016-08-22T07:53:46.000Z" itemprop="datePublished">2016-08-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/22/by酱油哥/">aidl简单知识及注意事项 @by酱油哥</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AIDL简单知识及注意事项</p>
+<p>1，支持的数据类型<br>基本类型<br>String和CharSequence<br>List 只支持Arraylist，里面每个元素都必须能够被AIDL支持<br>Map 只支持HashMap，要求同上<br>Parcelable 所有实现这个接口的对象<br>AIDL 所有的AIDL本身也能在AIDL中使用<br>2，注意事项<br>1，如果AIDL中用到了自定义的Parcelable对象，那么必须新建一个和它同名的aidl文件，并在其中声明它为Parcelable类型。如Book对象：<br>package com.example.aidl;<br>parcelable Book;</p>
+<p>2，AIDL中的每个实现了Parcelable接口的类都需要按照上面的那个方式去创建。</p>
+<p>3，AIDL中除了基本数据类型，其他的参数必须标上in、out、inout；in表示输入性参数；out表示输出型参数，inout表示输入输出型参数（不写也不会报错，他们在底层实现是有开销的）。</p>
+<p>4，AIDL只支持方法，不支持声明静态类型。</p>
+<p>5，AIDL中接口声明要按照如下规则，这样导入的接口才能够被AIDL文件认识：</p>
+<p>package com.example.aidl;</p>
+<p>import com.example.aidl.Book;</p>
+<p>interface IOnNewBookAdd{</p>
+<p>void onNewBookAdd(Book book);<br>    }<br>IPC方式的优缺点及适用场景</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bundle</td>
+<td>easy</td>
+<td>只能传Bundle类型数据</td>
+<td>四大组件间通信</td>
+</tr>
+<tr>
+<td>文件共享</td>
+<td>easy</td>
+<td>不能做到高并发且不能实时</td>
+<td>无并发，对实时性要求不高的场景</td>
+</tr>
+<tr>
+<td>AIDL</td>
+<td>强大，支持一对多并发，支持实时通信</td>
+<td>使用复杂，需处理好线程同步    一对多且有RPC需求</td>
+</tr>
+<tr>
+<td>Messager</td>
+<td>一般，支持一对多串行通信，支持实时</td>
+<td>不能很好处理并发，不支持RPC，只能传递Bundle类型数据</td>
+<td>低并发的一对多及时通信</td>
+</tr>
+<tr>
+<td>ContentProvider</td>
+<td>在数据访问方面功能强大，支持一对多数据共享，可通过Call扩展其他操作</td>
+<td>可理解为受约束的AIDL，主要提供数据源的CRUD操作</td>
+<td>一对多的进程间通信</td>
+</tr>
+<tr>
+<td>Socket</td>
+<td>强大，支持网络传输字节流，支持一对多并发实时通信</td>
+<td>实现麻烦，不支持直接的RPC</td>
+<td>网络数据交换</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/08/22/by酱油哥/" data-id="cis5rdtaj0000h4uw2p9nbo4c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hexo-github搭建博客" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/22/hexo-github搭建博客/" class="article-date">
@@ -106,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/08/22/hexo-github搭建博客/" data-id="cis5qofc60001souw0v5j5le3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/08/22/hexo-github搭建博客/" data-id="cis5rdtat0002h4uwrqyfp2um" class="article-share-link">Share</a>
       
       
     </footer>
@@ -143,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/08/22/涛哥傻逼/" data-id="cis5qofc60002souw113wcijj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/08/22/涛哥傻逼/" data-id="cis5rdtav0003h4uwelsmbel4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -188,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/08/22/hello-world/" data-id="cis5qofc60000souwh920w6bg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/08/22/hello-world/" data-id="cis5rdtaq0001h4uw2rg45csy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -226,6 +319,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/08/22/by酱油哥/">aidl简单知识及注意事项 @by酱油哥</a>
+          </li>
         
           <li>
             <a href="/2016/08/22/hexo-github搭建博客/">hexo+github搭建博客</a>

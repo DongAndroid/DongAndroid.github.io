@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>aidl简单知识及注意事项 @by酱油哥 | 群博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="AIDL简单知识及注意事项
+1，支持的数据类型基本类型String和CharSequenceList 只支持Arraylist，里面每个元素都必须能够被AIDL支持Map 只支持HashMap，要求同上Parcelable 所有实现这个接口的对象AIDL 所有的AIDL本身也能在AIDL中使用2，注意事项1，如果AIDL中用到了自定义的Parcelable对象，那么必须新建一个和它同名的aidl文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="aidl简单知识及注意事项 @by酱油哥">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/by酱油哥/index.html">
+<meta property="og:site_name" content="群博客">
+<meta property="og:description" content="AIDL简单知识及注意事项
+1，支持的数据类型基本类型String和CharSequenceList 只支持Arraylist，里面每个元素都必须能够被AIDL支持Map 只支持HashMap，要求同上Parcelable 所有实现这个接口的对象AIDL 所有的AIDL本身也能在AIDL中使用2，注意事项1，如果AIDL中用到了自定义的Parcelable对象，那么必须新建一个和它同名的aidl文">
+<meta property="og:updated_time" content="2016-08-22T08:08:00.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="aidl简单知识及注意事项 @by酱油哥">
+<meta name="twitter:description" content="AIDL简单知识及注意事项
+1，支持的数据类型基本类型String和CharSequenceList 只支持Arraylist，里面每个元素都必须能够被AIDL支持Map 只支持HashMap，要求同上Parcelable 所有实现这个接口的对象AIDL 所有的AIDL本身也能在AIDL中使用2，注意事项1，如果AIDL中用到了自定义的Parcelable对象，那么必须新建一个和它同名的aidl文">
+  
+    <link rel="alternate" href="/atom.xml" title="群博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">群博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">QQ群号341760213</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="aidl简单知识及注意事项-by酱油哥" class="article article-type-aidl简单知识及注意事项" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/22/by酱油哥/" class="article-date">
+  <time datetime="2016-08-22T07:53:46.000Z" itemprop="datePublished">2016-08-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      aidl简单知识及注意事项 @by酱油哥
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AIDL简单知识及注意事项</p>
+<p>1，支持的数据类型<br>基本类型<br>String和CharSequence<br>List 只支持Arraylist，里面每个元素都必须能够被AIDL支持<br>Map 只支持HashMap，要求同上<br>Parcelable 所有实现这个接口的对象<br>AIDL 所有的AIDL本身也能在AIDL中使用<br>2，注意事项<br>1，如果AIDL中用到了自定义的Parcelable对象，那么必须新建一个和它同名的aidl文件，并在其中声明它为Parcelable类型。如Book对象：<br>package com.example.aidl;<br>parcelable Book;</p>
+<p>2，AIDL中的每个实现了Parcelable接口的类都需要按照上面的那个方式去创建。</p>
+<p>3，AIDL中除了基本数据类型，其他的参数必须标上in、out、inout；in表示输入性参数；out表示输出型参数，inout表示输入输出型参数（不写也不会报错，他们在底层实现是有开销的）。</p>
+<p>4，AIDL只支持方法，不支持声明静态类型。</p>
+<p>5，AIDL中接口声明要按照如下规则，这样导入的接口才能够被AIDL文件认识：</p>
+<p>package com.example.aidl;</p>
+<p>import com.example.aidl.Book;</p>
+<p>interface IOnNewBookAdd{</p>
+<p>void onNewBookAdd(Book book);<br>    }<br>IPC方式的优缺点及适用场景</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bundle</td>
+<td>easy</td>
+<td>只能传Bundle类型数据</td>
+<td>四大组件间通信</td>
+</tr>
+<tr>
+<td>文件共享</td>
+<td>easy</td>
+<td>不能做到高并发且不能实时</td>
+<td>无并发，对实时性要求不高的场景</td>
+</tr>
+<tr>
+<td>AIDL</td>
+<td>强大，支持一对多并发，支持实时通信</td>
+<td>使用复杂，需处理好线程同步    一对多且有RPC需求</td>
+</tr>
+<tr>
+<td>Messager</td>
+<td>一般，支持一对多串行通信，支持实时</td>
+<td>不能很好处理并发，不支持RPC，只能传递Bundle类型数据</td>
+<td>低并发的一对多及时通信</td>
+</tr>
+<tr>
+<td>ContentProvider</td>
+<td>在数据访问方面功能强大，支持一对多数据共享，可通过Call扩展其他操作</td>
+<td>可理解为受约束的AIDL，主要提供数据源的CRUD操作</td>
+<td>一对多的进程间通信</td>
+</tr>
+<tr>
+<td>Socket</td>
+<td>强大，支持网络传输字节流，支持一对多并发实时通信</td>
+<td>实现麻烦，不支持直接的RPC</td>
+<td>网络数据交换</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/08/22/by酱油哥/" data-id="cis5rdtaj0000h4uw2p9nbo4c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/22/hexo-github搭建博客/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hexo+github搭建博客</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/08/22/by酱油哥/">aidl简单知识及注意事项 @by酱油哥</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/22/hexo-github搭建博客/">hexo+github搭建博客</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/22/涛哥傻逼/">涛哥傻逼</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/22/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 刘海东<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
